@@ -1,49 +1,39 @@
-// SplashScreen.kt
 package com.dev.simeta
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavController
 import kotlinx.coroutines.delay
+import androidx.compose.ui.layout.ContentScale
+import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun SplashScreen(navController: NavController) {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize(), // Mengatur kotak untuk memenuhi ukuran layar
         contentAlignment = Alignment.Center
     ) {
-        // Gambar latar belakang terikat ke atas layar
+        // Gambar splash yang memenuhi layar
         Image(
-            painter = painterResource(id = R.drawable.bgunand), // Gambar latar belakang
-            contentDescription = "Background Image",
-            modifier = Modifier
-                 // Mengatur lebar gambar latar belakang
-                .align(Alignment.TopCenter) // Mengatur posisi gambar ke atas
-        )
-
-        // Gambar logo Simeta di tengah layar
-        Image(
-            painter = painterResource(id = R.drawable.logosimeta),
-            contentDescription = "Logo Simeta",
-            modifier = Modifier.size(384.dp) // Mengatur ukuran logo menjadi 384 dp
+            painter = painterResource(id = R.drawable.splash), // Gambar splash
+            contentDescription = "Splash Image",
+            contentScale = ContentScale.Crop, // Memastikan gambar mengisi area yang tersedia
+            modifier = Modifier.fillMaxSize() // Mengatur gambar untuk memenuhi layar
         )
     }
 
-    // Delay selama 2 detik sebelum pindah ke MainScreen
+    // Delay selama 2 detik sebelum pindah ke LoginScreen
     LaunchedEffect(Unit) {
         delay(2000)
-        navController.navigate("main") {
-            popUpTo("splash") { inclusive = true }
+        navController.navigate("login") { // Pindah ke LoginScreen
+            popUpTo("splash") { inclusive = true } // Menghapus splash dari stack
         }
     }
 }
