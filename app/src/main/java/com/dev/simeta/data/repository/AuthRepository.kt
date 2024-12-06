@@ -1,5 +1,6 @@
 package com.dev.simeta.data.repository
 
+import android.util.Log
 import com.dev.simeta.data.api.AuthApi
 import com.dev.simeta.data.model.LoginRequest
 import com.dev.simeta.data.model.LoginResponse
@@ -8,23 +9,19 @@ import java.io.IOException
 
 class AuthRepository(private val authApi: AuthApi) {
 
-    /**
-     * Fungsi untuk melakukan login
-     * @param email: String
-     * @param password: String
-     * @return LoginResponse
-     */
     suspend fun login(email: String, password: String): Result<LoginResponse> {
         return try {
             val request = LoginRequest(email, password)
             val response = authApi.login(request)
             Result.success(response)
         } catch (e: HttpException) {
-            Result.failure(Exception("Terjadi kesalahan pada server: ${e.message}"))
+            val errorMessage = e.response()?.errorBody()?.string() ?: "Unknown server error"
+            Result.failure(Exception(errorMessage))
         } catch (e: IOException) {
-            Result.failure(Exception("Tidak dapat terhubung ke server. Periksa koneksi internet Anda."))
+            Result.failure(Exception("Network error: Please check your connection."))
         } catch (e: Exception) {
-            Result.failure(e)
+            Result.failure(Exception("Unexpected error: ${e.message}"))
         }
     }
 }
+

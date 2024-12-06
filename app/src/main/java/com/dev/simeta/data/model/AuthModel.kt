@@ -6,5 +6,11 @@ data class LoginRequest(
 )
 
 data class LoginResponse(
-    val token: String,
+    val error: Boolean,
+    val message: String,
+    val data: Token?
+)
+
+data class Token(
+    val token: String
 )

@@ -18,7 +18,6 @@ object AppModule {
     @Provides
     @Singleton
     fun provideAuthApi(): AuthApi {
-        // Replace BASE_URL with your actual base URL
         val retrofit = Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())

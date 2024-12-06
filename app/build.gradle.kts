@@ -70,7 +70,7 @@ android {
 
     packaging {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "META-INF/versions/9/OSGI-INF/MANIFEST.MF"
         }
     }
 
@@ -94,7 +94,9 @@ dependencies {
 
     // Add optional dependencies for additional features
     implementation("androidx.compose.material:material-icons-extended:1.7.4")
-    implementation("androidx.datastore:datastore-preferences-core-jvm:1.1.1") // Untuk ikon tambahan
+    implementation("androidx.datastore:datastore-preferences-core-jvm:1.1.1")
+    implementation("com.android.identity:identity-jvm:202411.1")
+    implementation("com.google.android.gms:play-services-mlkit-text-recognition-common:19.1.0") // Untuk ikon tambahan
 
     // Testing dependencies
     testImplementation("junit:junit:4.13.2")
@@ -119,6 +121,9 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.51.1")
     implementation ("androidx.datastore:datastore-preferences:1.0.0")
     implementation ("androidx.hilt:hilt-navigation-compose:1.0.0")
+
+    implementation ("androidx.navigation:navigation-compose:2.7.5")
+    implementation ("androidx.compose.material:material:1.5.4")
 
 
 }
