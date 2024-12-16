@@ -7,12 +7,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.dev.simeta.ui.view.home_components.MilestoneCard
+import com.dev.simeta.ui.view.home.home_components.MilestoneCard
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import com.dev.simeta.ui.view.home_components.MilestoneTimeline
-import com.dev.simeta.ui.view.home_components.NavigationMenu
-import com.dev.simeta.ui.view.home_components.ProfileHeader
+import com.dev.simeta.ui.view.home.home_components.MilestoneTimeline
+import com.dev.simeta.ui.view.home.home_components.NavigationMenu
+import com.dev.simeta.ui.view.home.home_components.ProfileHeader
 
 @Composable
 fun HomeScreen() {

@@ -1,4 +1,4 @@
-package com.dev.simeta.ui.view.home_components
+package com.dev.simeta.ui.view.home.home_components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
