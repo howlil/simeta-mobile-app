@@ -21,8 +21,13 @@ import com.dev.simeta.ui.components.BottomBar
 import com.dev.simeta.ui.components.BottomNavItem
 import com.dev.simeta.ui.theme.SimetaTheme
 import com.dev.simeta.ui.view.*
+import com.dev.simeta.ui.view.bimbingan.BimbinganScreen
+import com.dev.simeta.ui.view.home.HomeScreen
+import com.dev.simeta.ui.view.logbook.LogBookScreen
 import com.dev.simeta.ui.view.logbook.logbook_pages.DetailLogbook
 import com.dev.simeta.ui.view.logbook.logbook_pages.TambahLogbook
+import com.dev.simeta.ui.view.login.LoginScreen
+import com.dev.simeta.ui.view.user.UserScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -46,7 +51,7 @@ class MainActivity : ComponentActivity() {
 fun AppNavigator() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = "main") {
+    NavHost(navController = navController, startDestination = "splash") {
         composable("splash") {
             SplashScreen(navController)
         }
@@ -75,7 +80,7 @@ fun MainScreenWithBottomBar(mainNavController: NavController) {
             modifier = Modifier.padding(paddingValues)
         ) {
             composable(BottomNavItem.Home.route) {
-                HomeScreen()
+                HomeScreen(navController)
             }
             composable(BottomNavItem.Logbook.route) {
                 LogBookScreen(navController)
@@ -84,7 +89,7 @@ fun MainScreenWithBottomBar(mainNavController: NavController) {
                 BimbinganScreen()
             }
             composable(BottomNavItem.Profile.route) {
-                //ProfileScreen()
+                UserScreen()
             }
             composable("tambah_logbook") {
                 TambahLogbook(navController)

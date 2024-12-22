@@ -3,7 +3,10 @@ package com.dev.simeta.ui.view.logbook.logbook_components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -23,7 +26,6 @@ data class VerificationStatus(
 @Composable
 fun LogbookCard(
     date: String,
-    month: String,
     description: String,
     status: String,
     onClick: () -> Unit
@@ -68,12 +70,7 @@ fun LogbookCard(
                 fontWeight = FontWeight.Bold,
                 color = Color.Black
             )
-            Text(
-                text = month,
-                fontSize = 14.sp,
-                color = Color.Gray,
-                modifier = Modifier.padding(top = 4.dp)
-            )
+
             Text(
                 text = description,
                 fontSize = 14.sp,
