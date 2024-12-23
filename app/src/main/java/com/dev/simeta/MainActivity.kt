@@ -15,6 +15,7 @@ import com.dev.simeta.ui.theme.SimetaTheme
 import com.dev.simeta.ui.view.LoginScreen
 import com.dev.simeta.ui.view.MainScreen
 import com.dev.simeta.ui.view.SplashScreen
+import com.google.firebase.FirebaseApp
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -22,6 +23,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        FirebaseApp.initializeApp(this)
+
         setContent {
             SimetaTheme {
                 Surface(

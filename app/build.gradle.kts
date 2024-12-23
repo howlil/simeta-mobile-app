@@ -119,7 +119,7 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.51.1")
     implementation ("androidx.datastore:datastore-preferences:1.0.0")
     implementation ("androidx.hilt:hilt-navigation-compose:1.0.0")
-
+    implementation ("com.google.firebase:firebase-messaging:24.0.0")
 
 }
 
