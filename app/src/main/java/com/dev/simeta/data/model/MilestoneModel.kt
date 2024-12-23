@@ -14,10 +14,10 @@ data class Milestone(
     val max_point: Int,
     val created_at: String,
     val updated_at: String,
-    val progress: List<MilestoneProgress>
+    val progress: List<ProgressData>
 )
 
-data class MilestoneProgress(
+data class ProgressData(
     val progress_id: String,
     val title: String,
     val details: String,

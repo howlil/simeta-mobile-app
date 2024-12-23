@@ -1,12 +1,16 @@
 package com.dev.simeta.data.repository
 
 import com.dev.simeta.data.api.AuthApi
+import com.dev.simeta.data.model.DashboardResponse
 import com.dev.simeta.data.model.LoginRequest
 import com.dev.simeta.data.model.LoginResponse
 import retrofit2.HttpException
 import java.io.IOException
 
-class AuthRepository(private val authApi: AuthApi) {
+class AuthRepository(
+    private val authApi: AuthApi
+
+) {
 
     suspend fun login(email: String, password: String): Result<LoginResponse> {
         return try {
@@ -24,6 +28,19 @@ class AuthRepository(private val authApi: AuthApi) {
             Result.failure(Exception("Network error: ${e.message}"))
         } catch (e: Exception) {
             android.util.Log.e("AuthRepository", "Unexpected error: ${e.message}")
+            Result.failure(Exception("Unexpected error: ${e.message}"))
+        }
+    }
+
+    suspend fun getDashboard(token: String): Result<DashboardResponse> {
+        return try {
+            val response = authApi.getDashboard("Bearer $token")
+            Result.success(response)
+        } catch (e: HttpException) {
+            Result.failure(Exception(e.response()?.errorBody()?.string() ?: "Unknown error"))
+        } catch (e: IOException) {
+            Result.failure(Exception("Network error: ${e.message}"))
+        } catch (e: Exception) {
             Result.failure(Exception("Unexpected error: ${e.message}"))
         }
     }

@@ -146,7 +146,7 @@ private fun MilestoneItemView(
                 Box(
                     modifier = Modifier
                         .width(2.dp)
-                        .height(64.dp)
+                        .height(48.dp)
                         .background(statusColor)
                 )
             }
@@ -192,7 +192,7 @@ private fun MilestoneItemView(
                 )
             }
 
-            Spacer(modifier = Modifier.width(8.dp))
+            Spacer(modifier = Modifier.width(12.dp))
 
             Column(
                 modifier = Modifier.weight(1f)

@@ -1,11 +1,24 @@
 package com.dev.simeta.ui.view.home.home_components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.horizontalScroll
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CalendarToday
-import androidx.compose.material3.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,6 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+
 
 @Composable
 fun MilestoneCard(
@@ -53,7 +67,7 @@ fun MilestoneCard(
                     modifier = Modifier
                         .fillMaxWidth()
                         .clip(RoundedCornerShape(16.dp))
-                        .background(Color.White.copy(alpha = 0.15f)) // Lighter rounded background
+                        .background(Color.White.copy(alpha = 0.25f)) // Lighter rounded background
                         .padding(12.dp),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
@@ -66,6 +80,10 @@ fun MilestoneCard(
                     )
 
                     Row(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(8.dp))
+                            .background(Color.Black.copy(alpha =0.15f))
+                            .padding(horizontal = 16.dp, vertical = 4.dp),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
@@ -79,7 +97,7 @@ fun MilestoneCard(
                             text = date,
                             color = Color.White,
                             fontSize = 14.sp,
-                            fontWeight = FontWeight.Light
+                            fontWeight = FontWeight.Normal,
                         )
                     }
                 }
@@ -89,8 +107,9 @@ fun MilestoneCard(
                 // Status Section
                 Row(
                     modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                        .fillMaxWidth()
+                        .horizontalScroll(rememberScrollState()), // Enable horizontal scrolling
+                    horizontalArrangement = Arrangement.spacedBy(16.dp) // Add spacing between columns
                 ) {
                     // Logbook Status
                     Column(
@@ -152,8 +171,7 @@ fun MilestoneCard(
                         Text(
                             text = "Status",
                             color = Color.White,
-                            fontSize = 14.sp,
-
+                            fontSize = 14.sp
                         )
                         Spacer(modifier = Modifier.height(4.dp))
                         Box(

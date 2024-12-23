@@ -11,6 +11,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -27,6 +28,10 @@ import com.dev.simeta.ui.view.logbook.LogBookScreen
 import com.dev.simeta.ui.view.logbook.logbook_pages.DetailLogbook
 import com.dev.simeta.ui.view.logbook.logbook_pages.TambahLogbook
 import com.dev.simeta.ui.view.login.LoginScreen
+import com.dev.simeta.ui.view.progress_ta.FormProgressTA
+import com.dev.simeta.ui.view.progress_ta.RiwayatProgressTA
+import com.dev.simeta.ui.view.reminder.ReminderFormScreen
+import com.dev.simeta.ui.view.reminder.ReminderScreen
 import com.dev.simeta.ui.view.user.UserScreen
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -93,6 +98,24 @@ fun MainScreenWithBottomBar(mainNavController: NavController) {
             }
             composable("tambah_logbook") {
                 TambahLogbook(navController)
+            }
+            composable("progress") {
+                val context = LocalContext.current
+                RiwayatProgressTA(context = context, navController = navController)            }
+            composable("form_progress") {
+                val context = LocalContext.current
+
+                FormProgressTA(context = context, navController = navController )
+            }
+            composable("reminder") {
+                val context = LocalContext.current
+
+                ReminderScreen(context = context, navController = navController )
+            }
+            composable("tambah_reminder") {
+                val context = LocalContext.current
+
+                ReminderFormScreen(context = context, navController = navController )
             }
             composable(
                 route = "detail_logbook/{logbookId}",
