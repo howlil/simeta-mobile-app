@@ -14,4 +14,8 @@
 .cxx
 local.properties
 env.properties
+<<<<<<< HEAD
 service.json
+=======
+google-services.json
+>>>>>>> a2366ee7d4adff84c382e4aa648c1552d78ccb0e
