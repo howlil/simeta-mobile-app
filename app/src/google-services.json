@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "158855344286",
+    "project_id": "tangkapin-6b81c",
+    "storage_bucket": "tangkapin-6b81c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:158855344286:android:4cbdff3fd890931c938b8f",
+        "android_client_info": {
+          "package_name": "com.dev.simeta"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDF3RzeWV3UptaZnzUZqd_ejI0vfdpL7ZQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

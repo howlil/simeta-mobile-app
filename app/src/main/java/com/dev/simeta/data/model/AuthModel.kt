@@ -2,7 +2,8 @@ package com.dev.simeta.data.model
 
 data class LoginRequest(
     val email: String,
-    val password: String
+    val password: String,
+    val fcmToken: String
 )
 
 data class LoginResponse(

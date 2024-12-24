@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val authRepository: AuthRepository
@@ -25,7 +24,7 @@ class LoginViewModel @Inject constructor(
             _loginState.value = LoginState.Loading
             try {
                 android.util.Log.d("LoginViewModel", "Starting login process for email=$email")
-                val result = authRepository.login(email, password)
+                val result = authRepository.login(email, password, context)
                 if (result.isSuccess) {
                     val loginResponse = result.getOrThrow()
                     android.util.Log.d("LoginViewModel", "Login successful: $loginResponse")
@@ -44,7 +43,6 @@ class LoginViewModel @Inject constructor(
             }
         }
     }
-
 
     sealed class LoginState {
         object Idle : LoginState()

@@ -64,12 +64,15 @@ fun HomeScreen(navController: NavController,viewModel: DashboardViewModel = hilt
                 val reminderTitle = data.reminder?.title ?: "No Reminders"
                 val reminderDate = data.reminder?.due_date ?: "N/A"
 
+                val currentMilestoneName = data.current_milestone?.name ?: "No Current Milestone"
+                val currentMilestoneStatus = data.current_milestone?.status ?: "N/A"
+
                 MilestoneCard(
                     title = reminderTitle,
-                    date = "Due Date: $reminderDate",
+                    date = reminderDate,
                     logbookCount = "${data.logbook.count}/${data.logbook.max}",
-                    milestone = data.current_milestone.name,
-                    status = data.current_milestone.status
+                    milestone = currentMilestoneName,
+                    status = currentMilestoneStatus
                 )
 
                 Spacer(modifier = Modifier.height(12.dp))

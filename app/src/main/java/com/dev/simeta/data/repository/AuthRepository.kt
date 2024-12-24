@@ -1,9 +1,11 @@
 package com.dev.simeta.data.repository
 
+import android.content.Context
 import com.dev.simeta.data.api.AuthApi
 import com.dev.simeta.data.model.DashboardResponse
 import com.dev.simeta.data.model.LoginRequest
 import com.dev.simeta.data.model.LoginResponse
+import kotlinx.coroutines.tasks.await
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -12,10 +14,15 @@ class AuthRepository(
 
 ) {
 
-    suspend fun login(email: String, password: String): Result<LoginResponse> {
+    suspend fun login(email: String, password: String, context: Context): Result<LoginResponse> {
         return try {
-            val request = LoginRequest(email, password)
-            android.util.Log.d("AuthRepository", "Sending request with email=$email, password=$password")
+            val fcmToken = getFcmToken() // Get FCM token
+            if (fcmToken == null) {
+                return Result.failure(Exception("Unable to retrieve FCM Token"))
+            }
+
+            val request = LoginRequest(email, password, fcmToken)
+            android.util.Log.d("AuthRepository", "Sending request with email=$email, fcmToken=$fcmToken")
             val response = authApi.login(request)
             android.util.Log.d("AuthRepository", "Response received: $response")
             Result.success(response)
@@ -31,6 +38,16 @@ class AuthRepository(
             Result.failure(Exception("Unexpected error: ${e.message}"))
         }
     }
+
+    private suspend fun getFcmToken(): String? {
+        return try {
+            com.google.firebase.messaging.FirebaseMessaging.getInstance().token.await()
+        } catch (e: Exception) {
+            android.util.Log.e("AuthRepository", "Error retrieving FCM token: ${e.message}")
+            null
+        }
+    }
+
 
     suspend fun getDashboard(token: String): Result<DashboardResponse> {
         return try {
