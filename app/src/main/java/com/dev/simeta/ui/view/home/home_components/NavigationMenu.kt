@@ -49,7 +49,7 @@ fun NavigationMenu(
         NavigationItem(
             title = "Judul TA",
             icon = Icons.Outlined.Add,
-            route = "judul_ta"
+            route = "judulta" // Ensure this route matches the one in NavHost
         ),
         NavigationItem(
             title = "Proposal",

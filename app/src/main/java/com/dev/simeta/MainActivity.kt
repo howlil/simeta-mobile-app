@@ -24,6 +24,9 @@ import com.dev.simeta.ui.theme.SimetaTheme
 import com.dev.simeta.ui.view.*
 import com.dev.simeta.ui.view.bimbingan.BimbinganScreen
 import com.dev.simeta.ui.view.home.HomeScreen
+import com.dev.simeta.ui.view.judulta.judulta_pages.DetailJudulta
+import com.dev.simeta.ui.view.judulta.JudultaScreen
+import com.dev.simeta.ui.view.judulta.judulta_pages.TambahJudulta
 import com.dev.simeta.ui.view.logbook.LogBookScreen
 import com.dev.simeta.ui.view.logbook.logbook_pages.DetailLogbook
 import com.dev.simeta.ui.view.logbook.logbook_pages.TambahLogbook
@@ -127,6 +130,23 @@ fun MainScreenWithBottomBar(mainNavController: NavController) {
                 DetailLogbook(
                     navController = navController,
                     logbookId = backStackEntry.arguments?.getString("logbookId") ?: ""
+                )
+            }
+            composable("judulta") {
+                JudultaScreen(navController = navController)
+            }
+            composable("tambah_judulta") {
+                TambahJudulta(navController = navController)
+            }
+            composable(
+                route = "detail_judulta/{judultaId}",
+                arguments = listOf(
+                    navArgument("judultaId") { type = NavType.StringType }
+                )
+            ) { backStackEntry ->
+                DetailJudulta(
+                    navController = navController,
+                    judultaId = backStackEntry.arguments?.getString("judultaId") ?: ""
                 )
             }
         }

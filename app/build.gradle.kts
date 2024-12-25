@@ -33,7 +33,7 @@ android {
         buildConfigField(
             type = "String",
             name = "BASE_URL",
-            value = "\"${apiKey}\"" // Added quotes to ensure it's a valid String in BuildConfig
+            value = apiKey
         )
     }
 
@@ -46,10 +46,13 @@ android {
             )
         }
     }
-
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.3"
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+
     }
 
     kotlinOptions {
@@ -62,7 +65,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.8" // Retained the latest version
+        kotlinCompilerExtensionVersion = "1.5.8"
     }
 
     packaging {
@@ -103,21 +106,17 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
     // Hilt
-    implementation("com.google.dagger:hilt-android:2.51.1") // Updated to latest version
-    kapt("com.google.dagger:hilt-android-compiler:2.51.1") // Updated to latest version
-    implementation("androidx.hilt:hilt-navigation-compose:1.1.0") // Retained the latest version
+    implementation("com.google.dagger:hilt-android:2.50")
+    kapt("com.google.dagger:hilt-android-compiler:2.50")
+    implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
 
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
     // OkHttp
-    implementation("com.squareup.okhttp3:okhttp:4.12.0") // Updated to latest version
-    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0") // Updated to latest version
-
-    // Firebase
-    implementation(platform("com.google.firebase:firebase-bom:33.7.0")) // Added Firebase BOM
-    implementation("com.google.firebase:firebase-messaging") // Removed explicit version to use BOM
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 
     // Testing dependencies
     testImplementation("junit:junit:4.13.2")
@@ -129,4 +128,6 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
+    implementation ("com.google.firebase:firebase-messaging:24.0.0")
 }
