@@ -26,6 +26,7 @@ import com.dev.simeta.ui.view.bimbingan.BimbinganScreen
 import com.dev.simeta.ui.view.home.HomeScreen
 import com.dev.simeta.ui.view.judulta.judulta_pages.DetailJudulta
 import com.dev.simeta.ui.view.judulta.JudultaScreen
+import com.dev.simeta.ui.view.judulta.judulta_pages.EditJudulta
 import com.dev.simeta.ui.view.judulta.judulta_pages.TambahJudulta
 import com.dev.simeta.ui.view.logbook.LogBookScreen
 import com.dev.simeta.ui.view.logbook.logbook_pages.DetailLogbook
@@ -35,6 +36,7 @@ import com.dev.simeta.ui.view.progress_ta.FormProgressTA
 import com.dev.simeta.ui.view.progress_ta.RiwayatProgressTA
 import com.dev.simeta.ui.view.reminder.ReminderFormScreen
 import com.dev.simeta.ui.view.reminder.ReminderScreen
+import com.dev.simeta.ui.view.user.ChangePasswordScreen
 import com.dev.simeta.ui.view.user.UserScreen
 import com.google.firebase.FirebaseApp
 import dagger.hilt.android.AndroidEntryPoint
@@ -100,7 +102,7 @@ fun MainScreenWithBottomBar(mainNavController: NavController) {
                 BimbinganScreen()
             }
             composable(BottomNavItem.Profile.route) {
-                UserScreen()
+                UserScreen(navController)
             }
             composable("tambah_logbook") {
                 TambahLogbook(navController)
@@ -148,6 +150,20 @@ fun MainScreenWithBottomBar(mainNavController: NavController) {
                     navController = navController,
                     judultaId = backStackEntry.arguments?.getString("judultaId") ?: ""
                 )
+            }
+            composable(
+                route = "edit_judulta/{judultaId}",
+                arguments = listOf(
+                    navArgument("judultaId") { type = NavType.StringType }
+                )
+            ) { backStackEntry ->
+                EditJudulta(
+                    navController = navController,
+                    judultaId = backStackEntry.arguments?.getString("judultaId") ?: ""
+                )
+            }
+            composable("change_password_screen") {
+                ChangePasswordScreen(navController = navController)
             }
         }
     }

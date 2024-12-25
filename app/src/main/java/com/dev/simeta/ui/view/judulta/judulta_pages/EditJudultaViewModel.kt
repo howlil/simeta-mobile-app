@@ -12,15 +12,15 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailJudultaViewModel @Inject constructor(
+class EditJudultaViewModel @Inject constructor(
     private val repository: JudultaRepository
 ) : ViewModel() {
 
     private val _detailJudultaState = MutableStateFlow<DetailJudultaState>(DetailJudultaState.Idle)
     val detailJudultaState: StateFlow<DetailJudultaState> = _detailJudultaState
 
-    private val _deleteState = MutableStateFlow<DeleteState>(DeleteState.Idle)
-    val deleteState: StateFlow<DeleteState> = _deleteState
+    private val _updateState = MutableStateFlow<UpdateState>(UpdateState.Idle)
+    val updateState: StateFlow<UpdateState> = _updateState
 
     fun fetchJudultaDetail(context: Context, judultaId: String) {
         viewModelScope.launch {
@@ -34,17 +34,18 @@ class DetailJudultaViewModel @Inject constructor(
         }
     }
 
-    fun deleteJudulta(context: Context, judultaId: String) {
+    fun updateJudulta(context: Context, id: String, title: String, description: String) {
         viewModelScope.launch {
+            _updateState.value = UpdateState.Loading
             try {
-                val success = repository.deleteJudulta(context, judultaId)
+                val success = repository.updateJudulta(context, id, title, description)
                 if (success) {
-                    _deleteState.value = DeleteState.Success("Judul TA deleted successfully")
+                    _updateState.value = UpdateState.Success("Judul TA berhasil diperbarui")
                 } else {
-                    _deleteState.value = DeleteState.Error("Failed to delete Judul TA")
+                    _updateState.value = UpdateState.Error("Gagal memperbarui Judul TA")
                 }
             } catch (e: Exception) {
-                _deleteState.value = DeleteState.Error(e.message ?: "Unknown error")
+                _updateState.value = UpdateState.Error(e.message ?: "Unknown error")
             }
         }
     }
@@ -56,9 +57,10 @@ class DetailJudultaViewModel @Inject constructor(
         data class Error(val message: String) : DetailJudultaState()
     }
 
-    sealed class DeleteState {
-        object Idle : DeleteState()
-        data class Success(val message: String) : DeleteState()
-        data class Error(val message: String) : DeleteState()
+    sealed class UpdateState {
+        object Idle : UpdateState()
+        object Loading : UpdateState()
+        data class Success(val message: String) : UpdateState()
+        data class Error(val message: String) : UpdateState()
     }
 }

@@ -7,6 +7,12 @@ import javax.inject.Inject
 
 class JudultaRepository @Inject constructor() {
 
+    private val judultaItems = mutableListOf(
+        JudultaItem(id = "1", title = "Implementasi Business Intelligence dalam Pengelolaan Sumber Daya Pariwisata di Bukittinggi", description = "Penelitian ini mengeksplorasi penerapan sistem informasi business intelligence dalam mengelola sumber daya pariwisata di Bukittinggi. Dengan menganalisis data pengunjung, umpan balik pelanggan, dan performa sektor pariwisata, sistem ini diharapkan dapat memberikan rekomendasi yang bermanfaat untuk meningkatkan pengalaman wisatawan dan efisiensi operasional"),
+        JudultaItem(id = "2", title = "Sistem Pendukung Keputusan untuk Pemilihan Produk Kacamata di Toko Sidipingao dengan Metode TOPSIS", description = "Penelitian ini bertujuan untuk mengembangkan sistem pendukung keputusan (SPK) yang membantu pemilik toko kacamata Sidipingao dalam memilih produk kacamata yang akan dijual. Dengan mempertimbangkan berbagai faktor seperti tren pasar, preferensi pelanggan, dan margin keuntungan, sistem ini diharapkan dapat meningkatkan penjualan dan kepuasan pelanggan."),
+        JudultaItem(id = "3", title = "Penerapan Enterprise Architecture untuk Meningkatkan Efisiensi dan Layanan Publik di Diskominfo Kota Padang", description = "Penelitian ini bertujuan untuk menerapkan Enterprise Architecture (EA) di Dinas Komunikasi dan Informatika Kota Padang untuk meningkatkan efisiensi operasional dan kualitas layanan publik. Dengan pendekatan yang sistematis, EA diharapkan dapat membantu Diskominfo dalam merencanakan dan mengelola infrastruktur TI, proses bisnis, serta alur informasi secara lebih efektif, sehingga dapat memberikan layanan yang lebih baik kepada masyarakat.")
+    )
+
     fun createJudulta(
         context: Context,
         title: String,
@@ -16,19 +22,14 @@ class JudultaRepository @Inject constructor() {
         buktiMatkulTA: Uri?,
         buktiLulusKP: Uri?
     ): Boolean {
-        // Implement your logic to create Judul TA here
-        // For now, let's simulate a successful creation
+        val newId = (judultaItems.size + 1).toString()
+        val newJudulta = JudultaItem(id = newId, title = title, description = description)
+        judultaItems.add(newJudulta)
         return true
     }
 
     fun getJudultaItems(context: Context): List<JudultaItem> {
-        // Implement your data fetching logic here
-        // For now, let's return a dummy list of JudultaItem
-        return listOf(
-            JudultaItem(id = "1", title = "Judul TA 1", description = "Deskripsi TA 1"),
-            JudultaItem(id = "2", title = "Judul TA 2", description = "Deskripsi TA 2"),
-            JudultaItem(id = "3", title = "Judul TA 3", description = "Deskripsi TA 3")
-        )
+        return judultaItems
     }
 
     fun getBidangPeminatan(): List<String> {
@@ -61,14 +62,22 @@ class JudultaRepository @Inject constructor() {
     }
 
     fun getJudultaDetail(context: Context, judultaId: String): JudultaItem {
-        // Implement your logic to fetch Judul TA detail here
-        // For now, let's return a dummy JudultaItem
-        return JudultaItem(id = judultaId, title = "Judul TA $judultaId", description = "Deskripsi TA $judultaId")
+        val items = getJudultaItems(context)
+        return items.find { it.id == judultaId } ?: JudultaItem(id = judultaId, title = "Judul TA $judultaId", description = "Deskripsi TA $judultaId")
+    }
+
+    fun updateJudulta(context: Context, id: String, title: String, description: String): Boolean {
+        val index = judultaItems.indexOfFirst { it.id == id }
+        return if (index != -1) {
+            val updatedJudulta = judultaItems[index].copy(title = title, description = description)
+            judultaItems[index] = updatedJudulta
+            true
+        } else {
+            false
+        }
     }
 
     fun deleteJudulta(context: Context, judultaId: String): Boolean {
-        // Implement your logic to delete Judul TA here
-        // For now, let's simulate a successful deletion
-        return true
+        return judultaItems.removeIf { it.id == judultaId }
     }
 }

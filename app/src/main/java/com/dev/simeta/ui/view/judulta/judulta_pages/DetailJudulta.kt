@@ -119,7 +119,7 @@ fun DetailJudultaContent(
             showBackButton = true,
             showEditDeleteButtons = true,
             onBackClick = { navController.popBackStack() },
-            onEditClick = { navController.navigate("edit-judulta/${judulta.id}") },
+            onEditClick = { navController.navigate("edit_judulta/${judulta.id}") },
             onDeleteClick = {
                 viewModel.deleteJudulta(context, judulta.id)
             }
@@ -143,8 +143,7 @@ fun DetailJudultaContent(
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
                     Text(
-                        text = "Terverifikasi",
-                        color = Color(0xFF00A67C),
+                        text = "Judul TA",
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Medium
                     )
