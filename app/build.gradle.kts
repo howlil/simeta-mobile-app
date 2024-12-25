@@ -130,4 +130,5 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
     implementation ("com.google.firebase:firebase-messaging:24.0.0")
+    implementation ("com.squareup.okhttp3:okhttp:4.10.0")
 }

@@ -6,11 +6,13 @@ import com.dev.simeta.data.api.LogbookApi
 import com.dev.simeta.data.api.MilestoneApi
 import com.dev.simeta.data.api.ProgressApi
 import com.dev.simeta.data.api.ReminderApi
+import com.dev.simeta.data.api.SidangApi
 import com.dev.simeta.data.repository.AuthRepository
 import com.dev.simeta.data.repository.LogbookRepository
 import com.dev.simeta.data.repository.MilestoneRepository
 import com.dev.simeta.data.repository.ProgressRepository
 import com.dev.simeta.data.repository.ReminderRepository
+import com.dev.simeta.data.repository.SidangRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -87,5 +89,17 @@ object AppModule {
     @Singleton
     fun provideReminderRepository(reminderApi: ReminderApi): ReminderRepository {
         return ReminderRepository(reminderApi)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSidangApi(retrofit: Retrofit): SidangApi {
+        return retrofit.create(SidangApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideSidangRepository(sidangApi: SidangApi): SidangRepository {
+        return SidangRepository(sidangApi)
     }
 }

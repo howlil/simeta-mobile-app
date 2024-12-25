@@ -3,6 +3,7 @@ package com.dev.simeta.service
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
@@ -52,6 +53,15 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             notificationManager.createNotificationChannel(channel)
         }
 
+        // Check notification permission (Android 13+)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) !=
+                PackageManager.PERMISSION_GRANTED) {
+                Log.e(TAG, "Notification permission not granted. Notification not sent.")
+                return
+            }
+        }
+
         // Build the notification
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.drawable.icon_bimbingan)
@@ -68,10 +78,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     override fun onNewToken(token: String) {
-        // Handle new or refreshed FCM registration token
         Log.d(TAG, "Refreshed token: $token")
-        // Send this token to your server if needed
-        // For example, you could use an AuthRepository or API call here
+
         sendTokenToServer(token)
     }
 

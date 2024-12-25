@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -25,14 +26,22 @@ import com.dev.simeta.ui.view.home.home_components.MilestoneCard
 import com.dev.simeta.ui.view.home.home_components.MilestoneTimeline
 import com.dev.simeta.ui.view.home.home_components.NavigationMenu
 import com.dev.simeta.ui.view.home.home_components.ProfileHeader
+import com.dev.simeta.ui.view.home.home_components.UserViewModel
 
 @Composable
-fun HomeScreen(navController: NavController,viewModel: DashboardViewModel = hiltViewModel()) { // Add NavController as a parameter
-    val context = LocalContext.current // Get the current context
-    val dashboardState = viewModel.dashboardState.collectAsState().value
+fun HomeScreen(
+    navController: NavController,
+    dashboardViewModel: DashboardViewModel = hiltViewModel(),
+    userViewModel: UserViewModel = hiltViewModel()
+) {
+    val context = LocalContext.current
+    val dashboardState = dashboardViewModel.dashboardState.collectAsState().value
+    val userState = userViewModel.userState.collectAsState().value
 
+    // Fetch data when the screen loads
     LaunchedEffect(Unit) {
-        viewModel.fetchDashboardData(context)
+        userViewModel.fetchUserData(context)
+        dashboardViewModel.fetchDashboardData(context)
     }
 
     Column(
@@ -43,13 +52,52 @@ fun HomeScreen(navController: NavController,viewModel: DashboardViewModel = hilt
     ) {
         Spacer(modifier = Modifier.height(12.dp))
 
-        ProfileHeader(
-            name = "Mhd Ulil Abshar",
-            email = "2211521003_ulil@student.ac.id"
-        )
+        // Handle ProfileHeader state
+        when (userState) {
+            is UserViewModel.UserState.Loading -> {
+                Box(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator()
+                }
+            }
+            is UserViewModel.UserState.Success -> {
+                ProfileHeader(
+                    name = userState.data.full_name,
+                    email = userState.data.email
+                )
+            }
+            is UserViewModel.UserState.Error -> {
+                Box(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "Failed to load user data: ${userState.message}",
+                        color = MaterialTheme.colorScheme.error,
+                        style = MaterialTheme.typography.bodyMedium
+                    )
+                }
+            }
+            UserViewModel.UserState.Idle -> {
+                // Tambahkan UI jika tidak ada tindakan yang dilakukan pada state Idle
+                Box(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "No action performed yet.",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onBackground
+                    )
+                }
+            }
+        }
 
         Spacer(modifier = Modifier.height(24.dp))
 
+        // Handle Dashboard state
         when (val state = dashboardState) {
             is DashboardViewModel.DashboardState.Loading -> {
                 Box(
@@ -61,18 +109,12 @@ fun HomeScreen(navController: NavController,viewModel: DashboardViewModel = hilt
             }
             is DashboardViewModel.DashboardState.Success -> {
                 val data = state.data
-                val reminderTitle = data.reminder?.title ?: "No Reminders"
-                val reminderDate = data.reminder?.due_date ?: "N/A"
-
-                val currentMilestoneName = data.current_milestone?.name ?: "No Current Milestone"
-                val currentMilestoneStatus = data.current_milestone?.status ?: "N/A"
-
                 MilestoneCard(
-                    title = reminderTitle,
-                    date = reminderDate,
+                    title = data.reminder?.title ?: "No Reminders",
+                    date = data.reminder?.due_date ?: "N/A",
                     logbookCount = "${data.logbook.count}/${data.logbook.max}",
-                    milestone = currentMilestoneName,
-                    status = currentMilestoneStatus
+                    milestone = data.current_milestone?.name ?: "No Current Milestone",
+                    status = data.current_milestone?.status ?: "N/A"
                 )
 
                 Spacer(modifier = Modifier.height(12.dp))
@@ -94,9 +136,8 @@ fun HomeScreen(navController: NavController,viewModel: DashboardViewModel = hilt
                 }
             }
             DashboardViewModel.DashboardState.Idle -> {
-                // Idle State: No UI shown
+                // No UI displayed in the Idle state
             }
         }
-
     }
 }

@@ -54,3 +54,39 @@ data class MilestoneDashboard(
     val name: String,
     val status: String
 )
+
+data class UserResponse(
+    val error: Boolean,
+    val message: String,
+    val data: UserData
+)
+
+data class UserData(
+    val id: String,
+    val full_name: String,
+    val email: String,
+    val nim: String,
+    val photoUrl: String?,
+    val fcmToken: String?,
+    val created_at: String,
+    val updated_at: String
+)
+
+data class UpdateMahasiswaResponse(
+    val error: Boolean,
+    val messages: String,
+    val data: Mahasiswa
+)
+
+data class Mahasiswa(
+    val id: String,
+    val full_name: String,
+    val email: String,
+    val nim: String,
+    val photoUrl: String?,
+    val password: String,
+    val fcmToken: String?,
+    val created_at: String,
+    val updated_at: String
+)
+
